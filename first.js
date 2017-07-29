@@ -13,6 +13,7 @@ let password = name+name+name;
 const bot = mineflayer.createBot({
 	host: "mc.keinett.com",
 	username: name,
+	version: "1.11"
 });
 
 bot.on('message', (message) => {
