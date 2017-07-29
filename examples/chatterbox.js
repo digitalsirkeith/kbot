@@ -52,22 +52,22 @@ bot.on('chat', (username, message) => {
       quit(username)
       break
     default:
-      bot.chat("That's nice")
+      console.log("That's nice")
   }
 
   function canSee (pos) {
     const block = bot.blockAt(pos)
     const r = bot.canSeeBlock(block)
     if (r) {
-      bot.chat(`I can see the block of ${block.displayName} at ${pos}`)
+      console.log(`I can see the block of ${block.displayName} at ${pos}`)
     } else {
-      bot.chat(`I cannot see the block of ${block.displayName} at ${pos}`)
+      console.log(`I cannot see the block of ${block.displayName} at ${pos}`)
     }
   }
 
   function sayPosition (username) {
-    bot.chat(`I am at ${bot.entity.position}`)
-    bot.chat(`You are at ${bot.players[username].entity.position}`)
+    console.log(`I am at ${bot.entity.position}`)
+    console.log(`You are at ${bot.players[username].entity.position}`)
   }
 
   function sayEquipment () {
@@ -79,19 +79,19 @@ bot.on('chat', (username, message) => {
     if (eq[3]) eqText.push(`wearing a ${eq[3].displayName} on your torso`)
     if (eq[4]) eqText.push(`wearing a ${eq[4].displayName} on your head`)
     if (eqText.length) {
-      bot.chat(`You are ${eqText.join(', ')}.`)
+      console.log(`You are ${eqText.join(', ')}.`)
     } else {
-      bot.chat('You are naked!')
+      console.log('You are naked!')
     }
   }
 
   function saySpawnPoint () {
-    bot.chat(`Spawn is at ${bot.spawnPoint}`)
+    console.log(`Spawn is at ${bot.spawnPoint}`)
   }
 
   function sayBlockUnder () {
     const block = bot.blockAt(bot.players[username].entity.position.offset(0, -1, 0))
-    bot.chat(`Block under you is ${block.displayName} in the ${block.biome.name} biome`)
+    console.log(`Block under you is ${block.displayName} in the ${block.biome.name} biome`)
     console.log(block)
   }
 
@@ -109,63 +109,63 @@ bot.on('nonSpokenChat', (message) => {
 })
 
 bot.on('login', () => {
-  bot.chat('Hi everyone!')
+  console.log('Hi everyone!')
 })
 bot.on('spawn', () => {
-  bot.chat('I spawned, watch out!')
+  console.log('I spawned, watch out!')
 })
 bot.on('spawnReset', (message) => {
-  bot.chat('Oh noez! My bed is broken.')
+  console.log('Oh noez! My bed is broken.')
 })
 bot.on('forcedMove', () => {
-  bot.chat(`I have been forced to move to ${bot.entity.position}`)
+  console.log(`I have been forced to move to ${bot.entity.position}`)
 })
 bot.on('health', () => {
-  bot.chat(`I have ${bot.health} health and ${bot.food} food`)
+  console.log(`I have ${bot.health} health and ${bot.food} food`)
 })
 bot.on('death', () => {
-  bot.chat('I died x.x')
+  console.log('I died x.x')
 })
 bot.on('kicked', (reason) => {
   console.log(`I got kicked for ${reason}`)
 })
 
 bot.on('time', () => {
-  // bot.chat("Current time: " + bot.time.day % 24000);
+  // console.log("Current time: " + bot.time.day % 24000);
 })
 bot.on('rain', () => {
   if (bot.isRaining) {
-    bot.chat('It started raining.')
+    console.log('It started raining.')
   } else {
-    bot.chat('It stopped raining.')
+    console.log('It stopped raining.')
   }
 })
 bot.on('noteHeard', (block, instrument, pitch) => {
-  bot.chat(`Music for my ears! I just heard a ${instrument.name}`)
+  console.log(`Music for my ears! I just heard a ${instrument.name}`)
 })
 bot.on('chestLidMove', (block, isOpen) => {
   const action = isOpen ? 'open' : 'close'
-  bot.chat(`Hey, did someone just ${action} a chest?`)
+  console.log(`Hey, did someone just ${action} a chest?`)
 })
 bot.on('pistonMove', (block, isPulling, direction) => {
   const action = isPulling ? 'pulling' : 'pushing'
-  bot.chat(`A piston is ${action} near me, i can hear it.`)
+  console.log(`A piston is ${action} near me, i can hear it.`)
 })
 
 bot.on('playerJoined', (player) => {
   if (player.username !== bot.username) {
-    bot.chat(`Hello, ${player.username}! Welcome to the server.`)
+    console.log(`Hello, ${player.username}! Welcome to the server.`)
   }
 })
 bot.on('playerLeft', (player) => {
   if (player.username === bot.username) return
-  bot.chat(`Bye ${player.username}`)
+  console.log(`Bye ${player.username}`)
 })
 bot.on('playerCollect', (collector, collected) => {
   if (collector.type === 'player' && collected.type === 'object') {
     const rawItem = collected.metadata[10]
     const item = mineflayer.Item.fromNotch(rawItem)
-    bot.chat(`${collector.username !== bot.username ? ("I'm so jealous. " + collector.username) : 'I '} collected ${item.count} ${item.displayName}`)
+    console.log(`${collector.username !== bot.username ? ("I'm so jealous. " + collector.username) : 'I '} collected ${item.count} ${item.displayName}`)
   }
 })
 
@@ -173,48 +173,48 @@ bot.on('entitySpawn', (entity) => {
   if (entity.type === 'mob') {
     console.log(`Look out! A ${entity.mobType} spawned at ${entity.position}`)
   } else if (entity.type === 'player') {
-    bot.chat(`Look who decided to show up: ${entity.username}`)
+    console.log(`Look who decided to show up: ${entity.username}`)
   } else if (entity.type === 'object') {
-    bot.chat(`There's a ${entity.objectType} at ${entity.position}`)
+    console.log(`There's a ${entity.objectType} at ${entity.position}`)
   } else if (entity.type === 'global') {
-    bot.chat('Ooh lightning!')
+    console.log('Ooh lightning!')
   } else if (entity.type === 'orb') {
-    bot.chat('Gimme dat exp orb!')
+    console.log('Gimme dat exp orb!')
   }
 })
 bot.on('entityHurt', (entity) => {
   if (entity.type === 'mob') {
-    bot.chat(`Haha! The ${entity.mobType} got hurt!`)
+    console.log(`Haha! The ${entity.mobType} got hurt!`)
   } else if (entity.type === 'player') {
-    bot.chat(`Aww, poor ${entity.username} got hurt. Maybe you shouldn't have a ping of ${bot.players[entity.username].ping}`)
+    console.log(`Aww, poor ${entity.username} got hurt. Maybe you shouldn't have a ping of ${bot.players[entity.username].ping}`)
   }
 })
 bot.on('entitySwingArm', (entity) => {
-  bot.chat(`${entity.username}, I see that your arm is working fine.`)
+  console.log(`${entity.username}, I see that your arm is working fine.`)
 })
 bot.on('entityCrouch', (entity) => {
-  bot.chat(`${entity.username}: you so sneaky.`)
+  console.log(`${entity.username}: you so sneaky.`)
 })
 bot.on('entityUncrouch', (entity) => {
-  bot.chat(`${entity.username}: welcome back from the land of hunchbacks.`)
+  console.log(`${entity.username}: welcome back from the land of hunchbacks.`)
 })
 bot.on('entitySleep', (entity) => {
-  bot.chat(`Good night, ${entity.username}`)
+  console.log(`Good night, ${entity.username}`)
 })
 bot.on('entityWake', (entity) => {
-  bot.chat(`Top of the morning, ${entity.username}`)
+  console.log(`Top of the morning, ${entity.username}`)
 })
 bot.on('entityEat', (entity) => {
-  bot.chat(`${entity.username}: OM NOM NOM NOMONOM. That's what you sound like.`)
+  console.log(`${entity.username}: OM NOM NOM NOMONOM. That's what you sound like.`)
 })
 bot.on('entityAttach', (entity, vehicle) => {
   if (entity.type === 'player' && vehicle.type === 'object') {
-    bot.chat(`Sweet, ${entity.username} is riding that ${vehicle.objectType}`)
+    console.log(`Sweet, ${entity.username} is riding that ${vehicle.objectType}`)
   }
 })
 bot.on('entityDetach', (entity, vehicle) => {
   if (entity.type === 'player' && vehicle.type === 'object') {
-    bot.chat(`Lame, ${entity.username} stopped riding the ${vehicle.objectType}`)
+    console.log(`Lame, ${entity.username} stopped riding the ${vehicle.objectType}`)
   }
 })
 bot.on('entityEquipmentChange', (entity) => {
